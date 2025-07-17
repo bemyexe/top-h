@@ -1,7 +1,7 @@
 import type {RangePickerProps} from 'antd/es/date-picker';
 import dayjs from 'dayjs';
 
-export const DISABLED_DATE: RangePickerProps['disabledDate'] = (current) => {
+export const disabledDate: RangePickerProps['disabledDate'] = (current) => {
   const tooEarly =
     current && current < dayjs().subtract(30, 'days').endOf('day');
 

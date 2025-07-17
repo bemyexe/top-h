@@ -11,6 +11,8 @@ interface Props {
   className?: string;
 }
 
+const SELECT_DEFAULT_VALUE_US = ['1'];
+
 export const CountrySelect = ({className}: Props) => {
   const [countries, setCountries] = useState<Country[]>([]);
   const [loading, setLoading] = useState(false);
@@ -54,7 +56,7 @@ export const CountrySelect = ({className}: Props) => {
     <Select
       className={className}
       options={countryOptions}
-      defaultValue={['1']}
+      defaultValue={SELECT_DEFAULT_VALUE_US}
       labelRender={labelRender}
       loading={loading}
       optionRender={(option) => (

@@ -1,9 +1,12 @@
+import {useState} from 'react';
 import {faker} from '@faker-js/faker';
 import {Button, DatePicker} from 'antd';
+import type {RangePickerProps} from 'antd/es/date-picker';
 import clsx from 'clsx';
 
 import {CountrySelect} from './country-select/country-select';
-import {DISABLED_DATE} from './helpers/disabled-date';
+import {disabledDate} from './helpers/disabled-date';
+import {getAllDatesInRange} from './helpers/get-all-dates-in-range';
 import {LineChart} from './line-chart/line-chart';
 
 import './style.scss';
@@ -17,28 +20,26 @@ const {RangePicker} = DatePicker;
 const DATE_FORMAT = 'DD MMM YYYY';
 
 export const TopHistory = ({className}: Props) => {
-  const labels = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-  ];
+  const [dateRange, setDateRange] = useState<RangePickerProps['value']>(null);
+
+  const handleDateChange: RangePickerProps['onChange'] = (dates) => {
+    setDateRange(dates);
+  };
+
+  const labels = getAllDatesInRange(dateRange);
 
   const data = {
     labels,
     datasets: [
       {
         label: 'Dataset 1',
-        data: labels.map(() => faker.number.int({min: -1000, max: 1000})),
+        data: labels?.map(() => faker.number.int({min: -1000, max: 1000})),
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
       },
       {
         label: 'Dataset 2',
-        data: labels.map(() => faker.number.int({min: -1000, max: 1000})),
+        data: labels?.map(() => faker.number.int({min: -1000, max: 1000})),
         borderColor: 'rgb(53, 162, 235)',
         backgroundColor: 'rgba(53, 162, 235, 0.5)',
       },
@@ -53,7 +54,12 @@ export const TopHistory = ({className}: Props) => {
           <Button>PNG</Button>
           <Button>CSV</Button>
           <CountrySelect />
-          <RangePicker disabledDate={DISABLED_DATE} format={DATE_FORMAT} />
+          <RangePicker
+            value={dateRange}
+            onChange={handleDateChange}
+            disabledDate={disabledDate}
+            format={DATE_FORMAT}
+          />
         </div>
       </div>
       <LineChart data={data} />
