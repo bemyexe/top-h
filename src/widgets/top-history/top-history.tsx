@@ -4,10 +4,9 @@ import {Button, DatePicker} from 'antd';
 import type {RangePickerProps} from 'antd/es/date-picker';
 import clsx from 'clsx';
 
-import {CountrySelect} from './country-select/country-select';
-import {disabledDate} from './helpers/disabled-date';
-import {getAllDatesInRange} from './helpers/get-all-dates-in-range';
-import {LineChart} from './line-chart/line-chart';
+import {CountrySelect} from './country-select';
+import {disabledDate, getAllDatesInRange} from './helpers';
+import {LineChart} from './line-chart';
 
 import './style.scss';
 

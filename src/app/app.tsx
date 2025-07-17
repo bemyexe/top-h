@@ -1,4 +1,4 @@
-import {TopHistory} from '../widgets/top-history/top-history';
+import {TopHistory} from '../widgets/top-history';
 
 const log = console.log;
 
