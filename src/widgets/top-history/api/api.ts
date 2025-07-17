@@ -29,20 +29,23 @@ interface DataResponseDTO<T> {
   statusCode: number;
 }
 
-export const TOP_HISTORY_API = {
-  apiKey: 'B4NKGg=fVN5Q9KVOlOHDx9mOsKPAQsFBlEhBOwguLkNEDTZvKzJzT3l',
+class TopHistoryApi {
+  private apiKey = 'B4NKGg=fVN5Q9KVOlOHDx9mOsKPAQsFBlEhBOwguLkNEDTZvKzJzT3l';
+
   async getCountryList(): Promise<DataResponseDTO<Country>> {
     return fetch(`${import.meta.env.VITE_BASE_URL}/v1/geo?${this.apiKey}`).then(
       (result) => result.json()
     );
-  },
+  }
+
   async getCategoryList(): Promise<DataResponseDTO<Category>> {
     return fetch(
       `${import.meta.env.VITE_BASE_URL}/v1/applicationCategory?platform=1&${
         this.apiKey
       }`
     ).then((result) => result.json());
-  },
+  }
+
   async getChartData(
     countryId: Country['id'],
     dateFrom: string,
@@ -55,5 +58,7 @@ export const TOP_HISTORY_API = {
         this.apiKey
       }`
     ).then((result) => result.json());
-  },
-};
+  }
+}
+
+export const topHistoryApi = new TopHistoryApi();

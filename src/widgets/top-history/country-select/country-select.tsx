@@ -1,7 +1,6 @@
-import {useEffect, useState} from 'react';
 import {Select, type SelectProps} from 'antd';
 
-import {type Country, TOP_HISTORY_API} from '../api';
+import {useCountryList} from '../api/use-country-list';
 
 import {CountrySelectLabel} from './country-select-label';
 
@@ -14,26 +13,9 @@ interface Props {
 const SELECT_DEFAULT_VALUE_US = ['1'];
 
 export const CountrySelect = ({className}: Props) => {
-  const [countries, setCountries] = useState<Country[]>([]);
-  const [loading, setLoading] = useState(false);
+  const {data, isLoading} = useCountryList();
 
-  useEffect(() => {
-    const getCountry = async () => {
-      try {
-        setLoading(true);
-        const response = await TOP_HISTORY_API.getCountryList();
-        const data = response.data;
-        setCountries(data);
-      } catch (error) {
-        console.error('Error fetching countries:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    getCountry();
-  }, []);
-
-  const countryOptions: SelectProps['options'] = countries.map((country) => ({
+  const countryOptions: SelectProps['options'] = data?.data.map((country) => ({
     value: country.id.toString(),
     label: country.name,
     icon: country.icon,
@@ -42,7 +24,7 @@ export const CountrySelect = ({className}: Props) => {
 
   const labelRender: SelectProps['labelRender'] = (props) => {
     const {label, value} = props;
-    const country = countries.find((c) => c.id.toString() === value);
+    const country = data?.data.find((c) => c.id.toString() === value);
     return (
       <CountrySelectLabel
         imgSrc={country?.icon}
@@ -58,7 +40,7 @@ export const CountrySelect = ({className}: Props) => {
       options={countryOptions}
       defaultValue={SELECT_DEFAULT_VALUE_US}
       labelRender={labelRender}
-      loading={loading}
+      loading={isLoading}
       optionRender={(option) => (
         <CountrySelectLabel
           imgSrc={option.data.icon}
