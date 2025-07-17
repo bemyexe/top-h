@@ -1,4 +1,4 @@
-interface Country {
+export interface Country {
   active: boolean;
   country: string;
   icon: string;
@@ -9,7 +9,7 @@ interface Country {
   topApps: boolean;
 }
 
-interface Category {
+export interface Category {
   id: number;
   name: string;
   categories: string[];

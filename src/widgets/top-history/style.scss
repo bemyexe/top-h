@@ -1,0 +1,16 @@
+.top-history {
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &-title {
+      font-weight: bold;
+    }
+
+    &-actions {
+      display: flex;
+      gap: 8px;
+    }
+  }
+}
