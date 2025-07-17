@@ -3,6 +3,7 @@ import {Button, DatePicker} from 'antd';
 import clsx from 'clsx';
 
 import {CountrySelect} from './country-select/country-select';
+import {disabledDate} from './helpers/disabled-date';
 import {LineChart} from './line-chart';
 
 import './style.scss';
@@ -10,6 +11,10 @@ import './style.scss';
 interface Props {
   className?: string;
 }
+
+const {RangePicker} = DatePicker;
+
+const DATE_FORMAT = 'DD MMM YYYY';
 
 export const TopHistory = ({className}: Props) => {
   const labels = [
@@ -48,7 +53,7 @@ export const TopHistory = ({className}: Props) => {
           <Button>PNG</Button>
           <Button>CSV</Button>
           <CountrySelect />
-          <DatePicker />
+          <RangePicker disabledDate={disabledDate} format={DATE_FORMAT} />
         </div>
       </div>
       <LineChart data={data} />
