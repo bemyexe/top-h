@@ -12,7 +12,12 @@ export interface Country {
 export interface Category {
   id: number;
   name: string;
-  categories: string[];
+}
+
+export interface CategoriesDTO {
+  id: number;
+  name: string;
+  categories: Category[];
 }
 
 interface ChartData {
@@ -29,6 +34,12 @@ interface DataResponseDTO<T> {
   statusCode: number;
 }
 
+interface ChartResponse<T> {
+  data: T;
+  message: string;
+  statusCode: number;
+}
+
 class TopHistoryApi {
   private apiKey = 'B4NKGg=fVN5Q9KVOlOHDx9mOsKPAQsFBlEhBOwguLkNEDTZvKzJzT3l';
 
@@ -38,7 +49,7 @@ class TopHistoryApi {
     );
   }
 
-  async getCategoryList(): Promise<DataResponseDTO<Category>> {
+  async getCategoryList(): Promise<DataResponseDTO<CategoriesDTO>> {
     return fetch(
       `${import.meta.env.VITE_BASE_URL}/v1/applicationCategory?platform=1&${
         this.apiKey
@@ -50,7 +61,7 @@ class TopHistoryApi {
     countryId: Country['id'],
     dateFrom: string,
     dateTo: string
-  ): Promise<DataResponseDTO<ChartData>> {
+  ): Promise<ChartResponse<ChartData>> {
     return fetch(
       `${
         import.meta.env.VITE_BASE_URL

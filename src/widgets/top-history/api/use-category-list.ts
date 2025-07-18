@@ -8,5 +8,5 @@ export const useCategoryList = () => {
     queryFn: () => topHistoryApi.getCategoryList(),
   });
 
-  return {data, isLoading, error};
+  return {data: data?.data, isLoading, error};
 };

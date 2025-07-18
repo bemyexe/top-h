@@ -15,7 +15,7 @@ const SELECT_DEFAULT_VALUE_US = ['1'];
 export const CountrySelect = ({className}: Props) => {
   const {data, isLoading} = useCountryList();
 
-  const countryOptions: SelectProps['options'] = data?.data.map((country) => ({
+  const countryOptions: SelectProps['options'] = data?.map((country) => ({
     value: country.id.toString(),
     label: country.name,
     icon: country.icon,
@@ -24,7 +24,7 @@ export const CountrySelect = ({className}: Props) => {
 
   const labelRender: SelectProps['labelRender'] = (props) => {
     const {label, value} = props;
-    const country = data?.data.find((c) => c.id.toString() === value);
+    const country = data?.find((c) => c.id.toString() === value);
     return (
       <CountrySelectLabel
         imgSrc={country?.icon}

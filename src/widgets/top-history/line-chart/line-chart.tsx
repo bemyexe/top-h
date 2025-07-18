@@ -3,6 +3,7 @@ import {
   CategoryScale,
   Chart as ChartJS,
   type ChartData,
+  Colors,
   Legend,
   LinearScale,
   LineElement,
@@ -16,7 +17,7 @@ interface Props {
   data: ChartData<'line'>;
 }
 
-const options = {
+const OPTIONS = {
   responsive: true,
   plugins: {
     legend: {
@@ -32,13 +33,10 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  Colors
 );
 
 export const LineChart = ({className, data}: Props) => {
-  return (
-    <div className={className}>
-      <Line options={options} data={data} />
-    </div>
-  );
+  return <Line options={OPTIONS} data={data} className={className} />;
 };

@@ -4,6 +4,8 @@ import {Button, DatePicker} from 'antd';
 import type {RangePickerProps} from 'antd/es/date-picker';
 import clsx from 'clsx';
 
+import {useChartData} from './api/get-chart-data';
+import {useCategoryList} from './api/use-category-list';
 import {CountrySelect} from './country-select';
 import {disabledDate, getAllDatesInRange} from './helpers';
 import {LineChart} from './line-chart';
@@ -18,6 +20,18 @@ const {RangePicker} = DatePicker;
 
 const DATE_FORMAT = 'DD MMM YYYY';
 
+const ID_SUB = {
+  1: 'Top free',
+  2: 'Top Paid',
+  3: 'Top Grossing',
+  4: 'Top Free',
+  5: 'Top Paid',
+  6: 'Top Grossing',
+  7: 'New Free',
+  8: 'New Paid',
+  9: 'Trending',
+} as const;
+
 export const TopHistory = ({className}: Props) => {
   const [dateRange, setDateRange] = useState<RangePickerProps['value']>(null);
 
@@ -27,20 +41,20 @@ export const TopHistory = ({className}: Props) => {
 
   const labels = getAllDatesInRange(dateRange);
 
+  const {data: CategoryData} = useCategoryList();
+  const {data: ChartData} = useChartData(1, '2025-07-10', '2025-07-15');
+  console.log(CategoryData);
+  console.log(ChartData);
   const data = {
     labels,
     datasets: [
       {
         label: 'Dataset 1',
         data: labels?.map(() => faker.number.int({min: -1000, max: 1000})),
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
       },
       {
         label: 'Dataset 2',
         data: labels?.map(() => faker.number.int({min: -1000, max: 1000})),
-        borderColor: 'rgb(53, 162, 235)',
-        backgroundColor: 'rgba(53, 162, 235, 0.5)',
       },
     ],
   };

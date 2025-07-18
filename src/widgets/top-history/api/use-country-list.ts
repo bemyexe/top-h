@@ -8,5 +8,5 @@ export const useCountryList = () => {
     queryFn: () => topHistoryApi.getCountryList(),
   });
 
-  return {data, isLoading, error};
+  return {data: data?.data, isLoading, error};
 };
