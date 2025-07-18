@@ -8,9 +8,8 @@ import dayjs from 'dayjs';
 import {countrySelectors} from '../../shared/store';
 
 import {ID_SUB_CATEGORY} from './api/api';
-import {useChartData} from './api/get-chart-data';
-import {useCategoryList} from './api/use-category-list';
 import {formatChartData} from './helpers/format-chart-data';
+import {useCategoryList, useChartData} from './api';
 import {CountrySelect} from './country-select';
 import {disabledDate, getAllDatesInRange} from './helpers';
 import {LineChart} from './line-chart';
