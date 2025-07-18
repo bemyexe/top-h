@@ -1,7 +1,7 @@
 import {Select, type SelectProps} from 'antd';
 
 import {useAppDispatch} from '../../../shared/store';
-import {setSelectedCountry} from '../../../shared/store/country-select-slice';
+import {setSelectedCountry} from '../../../shared/store/country-select.slice';
 import {useCountryList} from '../api/use-country-list';
 
 import {CountrySelectLabel} from './country-select-label';

@@ -1,7 +1,7 @@
 import {useDispatch} from 'react-redux';
 import {configureStore} from '@reduxjs/toolkit';
 
-import {countryReducer} from './country-select-slice';
+import {countryReducer} from './country-select.slice';
 
 export const store = configureStore({
   reducer: {

@@ -1,7 +1,7 @@
 import {StrictMode} from 'react';
 import {createRoot} from 'react-dom/client';
 
-import {Providers} from '../shared/providers/providers';
+import {Providers} from '../shared/providers';
 
 import {App} from './app';
 
