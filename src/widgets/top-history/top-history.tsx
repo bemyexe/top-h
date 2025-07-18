@@ -22,7 +22,8 @@ interface Props {
 
 const {RangePicker} = DatePicker;
 
-const DATE_FORMAT = 'DD MMM YYYY';
+const CLIENT_DATE_FORMAT = 'DD MMM YYYY';
+const API_DATE_FORMAT = 'YYYY-MM-DD';
 
 export const TopHistory = ({className}: Props) => {
   const [dateRange, setDateRange] = useState<RangePickerProps['value']>(null);
@@ -33,13 +34,15 @@ export const TopHistory = ({className}: Props) => {
   };
 
   const labels = getAllDatesInRange(dateRange);
-  const displayLabels = labels.map((date) => dayjs(date).format(DATE_FORMAT));
+  const displayLabels = labels.map((date) =>
+    dayjs(date).format(CLIENT_DATE_FORMAT)
+  );
 
   const {data: CategoryData} = useCategoryList();
   const {data: ChartData, error} = useChartData(
     selectedCountry,
-    dateRange?.[0]?.format('YYYY-MM-DD'),
-    dateRange?.[1]?.format('YYYY-MM-DD')
+    dateRange?.[0]?.format(API_DATE_FORMAT),
+    dateRange?.[1]?.format(API_DATE_FORMAT)
   );
 
   const datasets =
@@ -73,7 +76,7 @@ export const TopHistory = ({className}: Props) => {
             value={dateRange}
             onChange={handleDateChange}
             disabledDate={disabledDate}
-            format={DATE_FORMAT}
+            format={CLIENT_DATE_FORMAT}
           />
         </div>
       </div>
