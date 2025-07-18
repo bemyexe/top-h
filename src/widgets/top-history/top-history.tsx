@@ -8,10 +8,9 @@ import dayjs from 'dayjs';
 import {countrySelectors} from '../../shared/store';
 
 import {ID_SUB_CATEGORY} from './api/api';
-import {formatChartData} from './helpers/format-chart-data';
 import {useCategoryList, useChartData} from './api';
 import {CountrySelect} from './country-select';
-import {disabledDate, getAllDatesInRange} from './helpers';
+import {disabledDate, formatChartData, getAllDatesInRange} from './helpers';
 import {LineChart} from './line-chart';
 
 import './style.scss';
@@ -29,6 +28,7 @@ export const TopHistory = ({className}: Props) => {
   const [dateRange, setDateRange] = useState<RangePickerProps['value']>(null);
 
   const selectedCountry = useSelector(countrySelectors.selectCountry);
+
   const handleDateChange: RangePickerProps['onChange'] = (dates) => {
     setDateRange(dates);
   };
@@ -46,8 +46,8 @@ export const TopHistory = ({className}: Props) => {
   );
 
   const datasets =
-    dateRange && ChartData
-      ? formatChartData(ChartData, CategoryData || [], ID_SUB_CATEGORY, labels)
+    dateRange && ChartData && CategoryData
+      ? formatChartData(ChartData, CategoryData, ID_SUB_CATEGORY, labels)
       : [
           {
             label: 'Choose Date Range',
