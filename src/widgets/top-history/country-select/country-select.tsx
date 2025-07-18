@@ -8,13 +8,13 @@ import {CountrySelectLabel} from './country-select-label';
 
 import './style.scss';
 
-interface Props {
+interface Props extends SelectProps {
   className?: string;
 }
 
 const SELECT_DEFAULT_VALUE_US = [1];
 
-export const CountrySelect = ({className}: Props) => {
+export const CountrySelect = ({className, ...props}: Props) => {
   const {data, isLoading} = useCountryList();
   const dispatch = useAppDispatch();
 
@@ -56,6 +56,7 @@ export const CountrySelect = ({className}: Props) => {
           label={option.data.label}
         />
       )}
+      {...props}
     />
   );
 };
