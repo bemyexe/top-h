@@ -10,6 +10,7 @@ export const useChartData = (
   const {data, isLoading, error} = useQuery({
     queryKey: ['chart', 'data', countryId, dateFrom, dateTo],
     queryFn: () => topHistoryApi.getChartData(countryId, dateFrom, dateTo),
+    enabled: !!dateFrom && !!dateTo,
   });
 
   return {data: data?.data, isLoading, error};

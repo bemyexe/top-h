@@ -8,7 +8,7 @@ export const getAllDatesInRange = (dateRange: RangePickerProps['value']) => {
   let currentDate = start?.startOf('day');
 
   while (currentDate?.isBefore(end?.add(1, 'day'), 'day')) {
-    dates.push(currentDate.format('DD MMM YY'));
+    dates.push(currentDate.format('YYYY-MM-DD'));
     currentDate = currentDate.add(1, 'day');
   }
 

@@ -1,5 +1,7 @@
 import {Select, type SelectProps} from 'antd';
 
+import {useAppDispatch} from '../../../shared/store';
+import {setSelectedCountry} from '../../../shared/store/country-select-slice';
 import {useCountryList} from '../api/use-country-list';
 
 import {CountrySelectLabel} from './country-select-label';
@@ -14,17 +16,22 @@ const SELECT_DEFAULT_VALUE_US = ['1'];
 
 export const CountrySelect = ({className}: Props) => {
   const {data, isLoading} = useCountryList();
+  const dispatch = useAppDispatch();
 
   const countryOptions: SelectProps['options'] = data?.map((country) => ({
-    value: country.id.toString(),
+    value: country.id,
     label: country.name,
     icon: country.icon,
     country: country.country,
   }));
 
+  const handleCountryChange = (value: string[]) => {
+    dispatch(setSelectedCountry(value));
+  };
+
   const labelRender: SelectProps['labelRender'] = (props) => {
     const {label, value} = props;
-    const country = data?.find((c) => c.id.toString() === value);
+    const country = data?.find((c) => c.id === value);
     return (
       <CountrySelectLabel
         imgSrc={country?.icon}
@@ -40,6 +47,7 @@ export const CountrySelect = ({className}: Props) => {
       options={countryOptions}
       defaultValue={SELECT_DEFAULT_VALUE_US}
       labelRender={labelRender}
+      onChange={handleCountryChange}
       loading={isLoading}
       optionRender={(option) => (
         <CountrySelectLabel

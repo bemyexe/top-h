@@ -20,7 +20,7 @@ export interface CategoriesDTO {
   categories: Category[];
 }
 
-interface ChartData {
+export interface ChartData {
   category: {
     subCategory: {
       date: number;
@@ -28,20 +28,32 @@ interface ChartData {
   };
 }
 
-interface DataResponseDTO<T> {
+export interface DataResponseDTO<T> {
   data: T[];
   message: string;
   statusCode: number;
 }
 
-interface ChartResponse<T> {
+export interface ChartResponse<T> {
   data: T;
   message: string;
   statusCode: number;
 }
 
+export const ID_SUB_CATEGORY = {
+  1: 'Top free',
+  2: 'Top Paid',
+  3: 'Top Grossing',
+  4: 'Top Free',
+  5: 'Top Paid',
+  6: 'Top Grossing',
+  7: 'New Free',
+  8: 'New Paid',
+  9: 'Trending',
+} as const;
+
 class TopHistoryApi {
-  private apiKey = 'B4NKGg=fVN5Q9KVOlOHDx9mOsKPAQsFBlEhBOwguLkNEDTZvKzJzT3l';
+  private apiKey = 'B4NKGg=' + import.meta.env.VITE_API_KEY;
 
   async getCountryList(): Promise<DataResponseDTO<Country>> {
     return fetch(`${import.meta.env.VITE_BASE_URL}/v1/geo?${this.apiKey}`).then(

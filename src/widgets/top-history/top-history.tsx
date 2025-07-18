@@ -1,11 +1,15 @@
 import {useState} from 'react';
-import {faker} from '@faker-js/faker';
 import {Button, DatePicker} from 'antd';
 import type {RangePickerProps} from 'antd/es/date-picker';
 import clsx from 'clsx';
+import dayjs from 'dayjs';
 
+import {useAppSelector} from '../../shared/store/store';
+
+import {ID_SUB_CATEGORY} from './api/api';
 import {useChartData} from './api/get-chart-data';
 import {useCategoryList} from './api/use-category-list';
+import {formatChartData} from './helpers/format-chart-data';
 import {CountrySelect} from './country-select';
 import {disabledDate, getAllDatesInRange} from './helpers';
 import {LineChart} from './line-chart';
@@ -20,43 +24,39 @@ const {RangePicker} = DatePicker;
 
 const DATE_FORMAT = 'DD MMM YYYY';
 
-const ID_SUB = {
-  1: 'Top free',
-  2: 'Top Paid',
-  3: 'Top Grossing',
-  4: 'Top Free',
-  5: 'Top Paid',
-  6: 'Top Grossing',
-  7: 'New Free',
-  8: 'New Paid',
-  9: 'Trending',
-} as const;
-
 export const TopHistory = ({className}: Props) => {
   const [dateRange, setDateRange] = useState<RangePickerProps['value']>(null);
-
+  const selectedCountry = useAppSelector(
+    (state) => state.country.selectedCountry
+  );
+  console.log(selectedCountry);
   const handleDateChange: RangePickerProps['onChange'] = (dates) => {
     setDateRange(dates);
   };
 
   const labels = getAllDatesInRange(dateRange);
+  const displayLabels = labels.map((date) => dayjs(date).format(DATE_FORMAT));
 
   const {data: CategoryData} = useCategoryList();
-  const {data: ChartData} = useChartData(1, '2025-07-10', '2025-07-15');
-  console.log(CategoryData);
-  console.log(ChartData);
+  const {data: ChartData} = useChartData(
+    selectedCountry,
+    dateRange?.[0]?.format('YYYY-MM-DD'),
+    dateRange?.[1]?.format('YYYY-MM-DD')
+  );
+
+  const datasets =
+    dateRange && ChartData
+      ? formatChartData(ChartData, CategoryData || [], ID_SUB_CATEGORY, labels)
+      : [
+          {
+            label: 'Choose Date Range',
+            data: [0],
+          },
+        ];
+
   const data = {
-    labels,
-    datasets: [
-      {
-        label: 'Dataset 1',
-        data: labels?.map(() => faker.number.int({min: -1000, max: 1000})),
-      },
-      {
-        label: 'Dataset 2',
-        data: labels?.map(() => faker.number.int({min: -1000, max: 1000})),
-      },
-    ],
+    labels: displayLabels,
+    datasets,
   };
 
   return (

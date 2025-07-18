@@ -1,6 +1,8 @@
+import clsx from 'clsx';
+
 import {TopHistory} from '../widgets/top-history';
 
-const log = console.log;
+import './app.scss';
 
 interface Props {
   className?: string;
@@ -8,7 +10,7 @@ interface Props {
 
 export const App = ({className}: Props) => {
   return (
-    <div className={className}>
+    <div className={clsx('app', className)}>
       App
       <TopHistory />
     </div>
