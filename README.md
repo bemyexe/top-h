@@ -7,6 +7,7 @@
 ### Stack
 - React + Typescript
 - Redux Toolkit
+- Chart.js
 - AntD UI
 - Tanstack Query
 - SCSS
