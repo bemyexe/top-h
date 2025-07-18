@@ -61,7 +61,7 @@ export const TopHistory = ({className}: Props) => {
   };
 
   if (error) {
-    return <div>error</div>;
+    return <div>error: {JSON.stringify(error)}</div>;
   }
 
   return (
