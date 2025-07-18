@@ -12,7 +12,7 @@ interface Props {
   className?: string;
 }
 
-const SELECT_DEFAULT_VALUE_US = ['1'];
+const SELECT_DEFAULT_VALUE_US = [1];
 
 export const CountrySelect = ({className}: Props) => {
   const {data, isLoading} = useCountryList();
@@ -25,7 +25,7 @@ export const CountrySelect = ({className}: Props) => {
     country: country.country,
   }));
 
-  const handleCountryChange = (value: string[]) => {
+  const handleCountryChange = (value: number[]) => {
     dispatch(setSelectedCountry(value));
   };
 

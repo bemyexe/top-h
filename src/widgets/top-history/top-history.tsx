@@ -1,10 +1,11 @@
 import {useState} from 'react';
+import {useSelector} from 'react-redux';
 import {Button, DatePicker} from 'antd';
 import type {RangePickerProps} from 'antd/es/date-picker';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 
-import {useAppSelector} from '../../shared/store/store';
+import {countrySelectors} from '../../shared/store';
 
 import {ID_SUB_CATEGORY} from './api/api';
 import {useChartData} from './api/get-chart-data';
@@ -26,10 +27,8 @@ const DATE_FORMAT = 'DD MMM YYYY';
 
 export const TopHistory = ({className}: Props) => {
   const [dateRange, setDateRange] = useState<RangePickerProps['value']>(null);
-  const selectedCountry = useAppSelector(
-    (state) => state.country.selectedCountry
-  );
-  console.log(selectedCountry);
+
+  const selectedCountry = useSelector(countrySelectors.selectCountry);
   const handleDateChange: RangePickerProps['onChange'] = (dates) => {
     setDateRange(dates);
   };

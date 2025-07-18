@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 
-interface CountryState {
+export interface CountryState {
   selectedCountry: number;
 }
 
