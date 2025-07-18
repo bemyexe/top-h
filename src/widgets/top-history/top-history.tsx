@@ -37,7 +37,7 @@ export const TopHistory = ({className}: Props) => {
   const displayLabels = labels.map((date) => dayjs(date).format(DATE_FORMAT));
 
   const {data: CategoryData} = useCategoryList();
-  const {data: ChartData} = useChartData(
+  const {data: ChartData, error} = useChartData(
     selectedCountry,
     dateRange?.[0]?.format('YYYY-MM-DD'),
     dateRange?.[1]?.format('YYYY-MM-DD')
@@ -57,6 +57,10 @@ export const TopHistory = ({className}: Props) => {
     labels: displayLabels,
     datasets,
   };
+
+  if (error) {
+    return <div>error</div>;
+  }
 
   return (
     <div className={clsx('top-history', className)}>
