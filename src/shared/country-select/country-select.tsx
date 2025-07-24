@@ -1,8 +1,8 @@
 import {Select, type SelectProps} from 'antd';
 
-import {useAppDispatch} from '../../../shared/store';
-import {setSelectedCountry} from '../../../shared/store/country-select.slice';
-import {useCountryList} from '../api/use-country-list';
+import {useAppDispatch} from '../store';
+import {setSelectedCountry} from '../store/country-select.slice';
+import {useCountryList} from '../../widgets/top-history/api/use-country-list';
 
 import {CountrySelectLabel} from './country-select-label';
 

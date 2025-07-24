@@ -9,7 +9,7 @@ import {countrySelectors} from '../../shared/store';
 
 import {ID_SUB_CATEGORY} from './api/api';
 import {useCategoryList, useChartData} from './api';
-import {CountrySelect} from './country-select';
+import {CountrySelect} from '../../shared/country-select';
 import {disabledDate, formatChartData, getAllDatesInRange} from './helpers';
 import {LineChart} from './line-chart';
 
