@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {useSelector} from 'react-redux';
-import {Button, DatePicker} from 'antd';
+import {DatePicker} from 'antd';
 import type {RangePickerProps} from 'antd/es/date-picker';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
@@ -23,6 +23,12 @@ const {RangePicker} = DatePicker;
 
 const CLIENT_DATE_FORMAT = 'DD MMM YYYY';
 const API_DATE_FORMAT = 'YYYY-MM-DD';
+const DEFAULT_CHART_DATASET = [
+  {
+    label: 'Choose Date Range',
+    data: [0],
+  },
+];
 
 export const TopHistory = ({className}: Props) => {
   const [dateRange, setDateRange] = useState<RangePickerProps['value']>(null);
@@ -48,12 +54,7 @@ export const TopHistory = ({className}: Props) => {
   const datasets =
     dateRange && ChartData && CategoryData
       ? formatChartData(ChartData, CategoryData, ID_SUB_CATEGORY, labels)
-      : [
-          {
-            label: 'Choose Date Range',
-            data: [0],
-          },
-        ];
+      : DEFAULT_CHART_DATASET;
 
   const data = {
     labels: displayLabels,
@@ -69,8 +70,6 @@ export const TopHistory = ({className}: Props) => {
       <div className="header">
         <div className="header-title">Top History</div>
         <div className="header-actions">
-          <Button>PNG</Button>
-          <Button>CSV</Button>
           <CountrySelect />
           <RangePicker
             value={dateRange}

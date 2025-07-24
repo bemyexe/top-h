@@ -23,6 +23,12 @@ const OPTIONS = {
       position: 'bottom' as const,
     },
   },
+  scales: {
+    y: {
+      reverse: true,
+      min: 1,
+    },
+  },
 };
 
 ChartJS.register(
