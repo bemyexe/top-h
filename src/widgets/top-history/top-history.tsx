@@ -22,13 +22,25 @@ interface Props {
 const {RangePicker} = DatePicker;
 
 const CLIENT_DATE_FORMAT = 'DD MMM YYYY';
+
 const API_DATE_FORMAT = 'YYYY-MM-DD';
+
 const DEFAULT_CHART_DATASET = [
   {
     label: 'Choose Date Range',
     data: [0],
   },
 ];
+
+const IS_LOADING_CHART_DATASET = {
+  labels: [''],
+  datasets: [
+    {
+      label: 'Loading...',
+      data: [0],
+    },
+  ],
+};
 
 export const TopHistory = ({className}: Props) => {
   const [dateRange, setDateRange] = useState<RangePickerProps['value']>(null);
@@ -45,7 +57,11 @@ export const TopHistory = ({className}: Props) => {
   );
 
   const {data: CategoryData} = useCategoryList();
-  const {data: ChartData, error} = useChartData(
+  const {
+    data: ChartData,
+    error,
+    isLoading,
+  } = useChartData(
     selectedCountry,
     dateRange?.[0]?.format(API_DATE_FORMAT),
     dateRange?.[1]?.format(API_DATE_FORMAT)
@@ -79,7 +95,7 @@ export const TopHistory = ({className}: Props) => {
           />
         </div>
       </div>
-      <LineChart data={data} />
+      <LineChart data={isLoading ? IS_LOADING_CHART_DATASET : data} />
     </div>
   );
 };
