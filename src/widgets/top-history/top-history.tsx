@@ -5,11 +5,11 @@ import type {RangePickerProps} from 'antd/es/date-picker';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 
+import {CountrySelect} from '../../shared/country-select';
 import {countrySelectors} from '../../shared/store';
 
 import {ID_SUB_CATEGORY} from './api/api';
 import {useCategoryList, useChartData} from './api';
-import {CountrySelect} from '../../shared/country-select';
 import {disabledDate, formatChartData, getAllDatesInRange} from './helpers';
 import {LineChart} from './line-chart';
 
@@ -37,6 +37,16 @@ const IS_LOADING_CHART_DATASET = {
   datasets: [
     {
       label: 'Loading...',
+      data: [0],
+    },
+  ],
+};
+
+const EMPTY_CHART_DATA = {
+  labels: [''],
+  datasets: [
+    {
+      label: 'There is no data for the selected period',
       data: [0],
     },
   ],
@@ -72,10 +82,13 @@ export const TopHistory = ({className}: Props) => {
       ? formatChartData(ChartData, CategoryData, ID_SUB_CATEGORY, labels)
       : DEFAULT_CHART_DATASET;
 
-  const data = {
-    labels: displayLabels,
-    datasets,
-  };
+  const data =
+    ChartData && Array.isArray(ChartData)
+      ? EMPTY_CHART_DATA
+      : {
+          labels: displayLabels,
+          datasets,
+        };
 
   if (error) {
     return <div>error: {JSON.stringify(error)}</div>;
