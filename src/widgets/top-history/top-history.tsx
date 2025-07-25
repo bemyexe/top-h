@@ -3,14 +3,18 @@ import {useSelector} from 'react-redux';
 import {DatePicker} from 'antd';
 import type {RangePickerProps} from 'antd/es/date-picker';
 import clsx from 'clsx';
-import dayjs from 'dayjs';
 
 import {CountrySelect} from '../../shared/country-select';
 import {countrySelectors} from '../../shared/store';
 
 import {ID_SUB_CATEGORY} from './api/api';
 import {useCategoryList, useChartData} from './api';
-import {disabledDate, formatChartData, getAllDatesInRange} from './helpers';
+import {
+  disabledDate,
+  formatAllDatesInRangeToDisplayLabels,
+  formatChartDataToDatasets,
+  getAllDatesInRange,
+} from './helpers';
 import {LineChart} from './line-chart';
 
 import './style.scss';
@@ -21,7 +25,7 @@ interface Props {
 
 const {RangePicker} = DatePicker;
 
-const CLIENT_DATE_FORMAT = 'DD MMM YYYY';
+const DISPLAY_DATE_FORMAT = 'DD MMM YYYY';
 
 const API_DATE_FORMAT = 'YYYY-MM-DD';
 
@@ -32,7 +36,7 @@ const DEFAULT_CHART_DATASET = [
   },
 ];
 
-const IS_LOADING_CHART_DATASET = {
+const LOADING_CHART_DATA = {
   labels: [''],
   datasets: [
     {
@@ -61,9 +65,10 @@ export const TopHistory = ({className}: Props) => {
     setDateRange(dates);
   };
 
-  const labels = getAllDatesInRange(dateRange);
-  const displayLabels = labels.map((date) =>
-    dayjs(date).format(CLIENT_DATE_FORMAT)
+  const allDatesInRange = getAllDatesInRange(dateRange);
+  const displayLabels = formatAllDatesInRangeToDisplayLabels(
+    allDatesInRange,
+    DISPLAY_DATE_FORMAT
   );
 
   const {data: CategoryData} = useCategoryList();
@@ -79,7 +84,12 @@ export const TopHistory = ({className}: Props) => {
 
   const datasets =
     dateRange && ChartData && CategoryData
-      ? formatChartData(ChartData, CategoryData, ID_SUB_CATEGORY, labels)
+      ? formatChartDataToDatasets(
+          ChartData,
+          CategoryData,
+          ID_SUB_CATEGORY,
+          allDatesInRange
+        )
       : DEFAULT_CHART_DATASET;
 
   const data =
@@ -104,11 +114,11 @@ export const TopHistory = ({className}: Props) => {
             value={dateRange}
             onChange={handleDateChange}
             disabledDate={disabledDate}
-            format={CLIENT_DATE_FORMAT}
+            format={DISPLAY_DATE_FORMAT}
           />
         </div>
       </div>
-      <LineChart data={isLoading ? IS_LOADING_CHART_DATASET : data} />
+      <LineChart data={isLoading ? LOADING_CHART_DATA : data} />
     </div>
   );
 };

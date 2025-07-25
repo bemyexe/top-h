@@ -5,11 +5,11 @@ interface Dataset {
   data: number[];
 }
 
-export const formatChartData = (
+export const formatChartDataToDatasets = (
   chartData: ChartData,
   categories: CategoriesDTO[],
   idSubСategory: Record<number, string>,
-  labels: string[]
+  allDatesInRange: string[]
 ): Dataset[] => {
   if (!chartData) return [];
 
@@ -33,7 +33,7 @@ export const formatChartData = (
 
         datasets.push({
           label: `${categoryName} - ${idSubСategory[subCategoryId]}`,
-          data: labels.map((date) => dateValues[date] ?? 0),
+          data: allDatesInRange.map((date) => dateValues[date] ?? 0),
         });
       }
     );
